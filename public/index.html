@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sprite Adventure</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="scroll-wrapper">
+   
+    <div class="section">
+      <video class="section-video" autoplay muted playsinline loop preload="auto">
+        <source src="videos/Title Page.mp4" type="video/mp4">
+      </video>
+      <div class="overlay">
+        <h1 class="title">Sprite Adventure</h1>
+      </div>
+    </div>
+
+    
+    <div class="section">
+      <video class="section-video" autoplay muted playsinline loop preload="auto">
+        <source src="videos/Information Page.mp4" type="video/mp4">
+      </video>
+      <div class="overlay">
+        <div class="info-text">
+          <h2>About Sprite Adventure</h2>
+          <p>
+            Sprite Adventure is a 2D side-scrolling platformer where you control a pixel character through
+            colorful levels. Jump over obstacles, avoid enemies, and explore each stage to reach the goal.
+          </p>
+          <p>
+            The game was built in Java and designed to feel like a classic retro adventure.
+          </p>
+        </div>
+      </div>
+    </div>
+
+   
+    <div class="section">
+      <video class="section-video" autoplay muted playsinline loop preload="auto">
+        <source src="videos/Menu Page.mp4" type="video/mp4">
+      </video>
+      <div class="overlay">
+        <div class="menu-column">
+          <h2 class="menu-title">Menu</h2>
+          <button class="menu-btn" onclick="location.href='/devlog'">Devlog Journal</button>
+          <button class="menu-btn" onclick="location.href='/demo.html'">Game Demo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(";").shift();
+      }
+  
+      if (!getCookie("visited")) {
+        document.cookie = "visited=true; max-age=2592000; path=/"; 
+      } else {
+       
+        const msg = document.createElement("div");
+        msg.textContent = "Welcome back! Thanks for staying up to date with the development of Sprite Adventure.";
+        msg.style.position = "fixed";
+        msg.style.bottom = "20px";
+        msg.style.left = "50%";
+        msg.style.transform = "translateX(-50%)";
+        msg.style.background = "rgba(255, 255, 255, 0.9)";
+        msg.style.color = "black";
+        msg.style.padding = "1rem 2rem";
+        msg.style.borderRadius = "10px";
+        msg.style.fontFamily = "'MaruMonica', sans-serif";
+        msg.style.boxShadow = "0 0 10px gray";
+        msg.style.zIndex = 9999;
+        document.body.appendChild(msg);
+  
+        
+        setTimeout(() => {
+          msg.remove();
+        }, 5000);
+      }
+    });
+  </script>
+  
+</body>
+</html>

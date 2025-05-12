@@ -1,0 +1,315 @@
+@font-face {
+  font-family: 'MaruMonica';
+  src: url('fonts/MaruMonica.ttf') format('truetype');
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  background-color: black;
+  font-family: sans-serif;
+}
+
+.scroll-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+}
+
+.section {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background-color: black;
+}
+
+.section-video {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  display: block;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: none;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+/* Title Styling */
+.title {
+  font-family: 'MaruMonica', sans-serif;
+  font-size: 150px;
+  color: rgb(0, 0, 0);
+  text-shadow: 5px 5px 8px gray;
+  text-align: center;
+  pointer-events: none;
+  transform: translateY(-35%);
+}
+
+/* Info Box Styling */
+.info-text {
+  position: absolute;
+  top: 55%;
+  left: 8%;
+  transform: translateY(-85%);
+  width: 50%;
+  color: white;
+  font-size: 40px;
+  line-height: 1.5;
+  font-family: 'MaruMonica', sans-serif;
+  text-align: left;
+  pointer-events: auto;
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.info-text h2 {
+  font-family: 'MaruMonica', sans-serif;
+  font-size: 40px;
+  margin-bottom: 1rem;
+  color: white;
+  text-shadow: 2px 2px 6px gray;
+}
+
+/* Menu Layout */
+.menu-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  pointer-events: auto;
+  transform: translateY(-100%);
+}
+
+.menu-title {
+  font-family: 'MaruMonica', sans-serif;
+  font-size: 60px;
+  color: white;
+  text-shadow: 2px 2px 6px gray;
+  margin-bottom: 1rem;
+}
+
+/* Menu Buttons */
+.menu-btn {
+  font-family: 'MaruMonica', sans-serif;
+  font-size: 40px;
+  background-color: black;
+  color: white;
+  border: 3px solid white;
+  padding: 1.2rem 4rem;
+  width: 400px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  text-align: center;
+  padding-left: 5rem;
+}
+
+.menu-btn::before {
+  content: "";
+  position: absolute;
+  left: 1.2rem;
+  opacity: 0;
+  font-size: 50px;
+  transition: opacity 0.2s ease;
+}
+
+.menu-btn:hover::before {
+  content: ">";
+  opacity: 1;
+}
+
+.menu-btn:hover {
+  transform: translateX(5px);
+}
+
+/* Devlog Page */
+.devlog-header {
+  background-color: black;
+  padding: 2rem 4rem;
+  text-align: center;
+}
+
+.devlog-title {
+  font-family: 'MaruMonica', sans-serif;
+  font-size: 80px;
+  color: white;
+  text-shadow: 4px 4px 8px gray;
+  margin-bottom: 1rem;
+}
+
+.back-button {
+  font-family: 'MaruMonica', sans-serif;
+  font-size: 24px;
+  color: white;
+  text-decoration: none;
+  border: 2px solid white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 8px;
+  display: inline-block;
+  margin-top: 1rem;
+}
+
+.back-button:hover {
+  background-color: white;
+  color: black;
+  transition: all 0.3s ease;
+}
+
+.devlog-form {
+  padding: 2rem 4rem;
+  background-color: black;
+  color: white;
+  font-family: 'MaruMonica', sans-serif;
+  font-size: 20px;
+}
+
+.devlog-form input,
+.devlog-form textarea {
+  width: 100%;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 18px;
+  padding: 0.8rem;
+  border: 2px solid white;
+  background-color: black;
+  color: white;
+  font-family: 'MaruMonica', sans-serif;
+}
+
+.devlog-form button {
+  font-size: 20px;
+  background-color: white;
+  color: black;
+  padding: 0.8rem 2rem;
+  border: none;
+  font-family: 'MaruMonica', sans-serif;
+  cursor: pointer;
+}
+
+.devlog-form button:hover {
+  background-color: gray;
+  color: white;
+}
+
+.devlog-entries {
+  padding: 3rem 5rem;
+  color: white;
+  font-family: 'MaruMonica', sans-serif;
+  font-size: 24px;
+  line-height: 1.6;
+}
+
+.entry {
+  margin-bottom: 3rem;
+  border-left: 5px solid white;
+  padding-left: 2rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid #555;
+  color: white;
+}
+
+.entry-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  font-family: 'MaruMonica', sans-serif;
+  font-size: 18px;
+  color: white;
+}
+
+.entry-body.expanded {
+  max-height: 1000px;
+}
+
+.entry-actions {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.entry-actions button,
+.delete-form button {
+  font-family: 'MaruMonica', sans-serif;
+  font-size: 16px;
+  padding: 0.5rem 1rem;
+  width: 100px;
+  background: black;
+  color: white;
+  border: 2px solid white;
+  cursor: pointer;
+  text-align: center;
+}
+
+.entry-actions button:hover,
+.delete-form button:hover {
+  background-color: white;
+  color: black;
+}
+.game-demo-container {
+  padding: 3rem 4rem;
+  color: white;
+  font-family: 'MaruMonica', sans-serif;
+  text-align: center;
+}
+
+.demo-box {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 2rem;
+  border: 2px solid white;
+  border-radius: 10px;
+  max-width: 700px;
+  margin: 2rem auto;
+}
+
+.demo-download {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 20px;
+  padding: 0.7rem 2rem;
+  color: black;
+  background-color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  font-family: 'MaruMonica', sans-serif;
+}
+
+.demo-download:hover {
+  background-color: gray;
+  color: white;
+  transition: 0.3s ease;
+}
+
+.instructions {
+  margin-top: 1.5rem;
+  font-size: 16px;
+  color: #ccc;
+}
+
