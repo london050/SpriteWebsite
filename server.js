@@ -1,77 +1,66 @@
 const express = require('express');
 const mustacheExpress = require('mustache-express');
-const sqlite3 = require('sqlite3').verbose();
-const bodyParser = require('body-parser');
 const path = require('path');
 
 const app = express();
-const db = new sqlite3.Database('./db/devlog.sqlite');
 
-
+// Mustache setup
 app.engine('mustache', mustacheExpress());
 app.set('view engine', 'mustache');
 app.set('views', path.join(__dirname, 'views'));
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('public'));
+// Middleware
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: true }));
 
-app.get('/devlog', (req, res) => {
-  db.all('SELECT * FROM devlog_entries ORDER BY created_at DESC', (err, rows) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).send('Database error');
-    }
-    res.render('devlog', { entries: rows });
-  });
-});
-
-
-app.post('/devlog', (req, res) => {
-  const { title, content } = req.body;
-  db.run(
-    'INSERT INTO devlog_entries (title, content) VALUES (?, ?)',
-    [title, content],
-    (err) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).send('Failed to add entry');
-      }
-      res.redirect('/devlog');
-    }
-  );
-});
-
-
-app.post('/devlog/delete/:id', (req, res) => {
-  const id = req.params.id;
-  db.run('DELETE FROM devlog_entries WHERE id = ?', [id], (err) => {
-    if (err) return res.status(500).send('Failed to delete entry');
-    res.redirect('/devlog');
-  });
-});
-
-app.post('/devlog/edit/:id', express.json(), (req, res) => {
-  const id = req.params.id;
-  const { title, content } = req.body;
-
-  db.run(
-    'UPDATE devlog_entries SET title = ?, content = ? WHERE id = ?',
-    [title, content, id],
-    (err) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).send('Failed to edit entry');
-      }
-      res.status(200).send('Entry updated');
-    }
-  );
-});
-
-
+// Routes
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+app.get('/information', (req, res) => {
+  res.render('information', {
+    sections: [
+      {
+        title: "Project Setup & Game Loop",
+        embed: "https://www.canva.com/design/DAGnRRkFD0w/Q_gD1xXcou8m1_bfizvUrg/view?embed",
+        description: "This section covers setting up the project in IntelliJ and building the game loop. The game loop is critical for maintaining a steady frame rate and smoothly updating and rendering the game each tick."
+      },
+      {
+        title: "Player Movement & Input",
+        embed: "https://www.canva.com/design/DAGnRp6d1d0/h-ixEBeJ_cjNnZEKLQ3KVw/view?embed",
+        description: "This part introduces the KeyHandler class and player movement logic. It explains how real-time keyboard input is used to move the player and animate the character on screen."
+      },
+      {
+        title: "Tile Rendering & World Map",
+        embed: "https://www.canva.com/design/DAGnRm50XDY/Y0daOWsYoat1rycLfhDIeg/view?embed",
+        description: "Here we cover how tile images are loaded from the resource folder, mapped from a 2D text file, and then drawn as the world environment based on camera position."
+      },
+      {
+        title: "Collision Detection",
+        embed: "https://www.canva.com/design/DAGnRlSH35U/sOWJ-LpnU_M_ysK6sY0HSQ/view?embed",
+        description: "This slide explains how to set up collision areas for solid objects and map tiles, including checking collisions between the player and the game world."
+      },
+      {
+        title: "Object Placement",
+        embed: "https://www.canva.com/design/DAGnRtsidI0/Le2xoNJhx5oalwvzxfvW0Q/view?embed",
+        description: "We talk about placing objects like keys, doors, or items using an ObjectManager and how these objects are rendered within the map boundaries."
+      },
+      {
+        title: "Object Interaction",
+        embed: "https://www.canva.com/design/DAGnXrbQH8c/UMeNGPGC2kzOeK1mbDn_iw/view?embed",
+        description: "This expands on how the player interacts with placed objects — such as collecting items, unlocking doors, or triggering actions based on player position."
+      },
+      {
+        title: "Sound and UI System",
+        embed: "https://www.canva.com/design/DAGnXtPBc1Y/b4ukIQ0bYZz6r9DZnPyRJg/view?embed",
+        description: "In this final part, sound effects and background music are added. UI elements like health bars and message windows are also discussed."
+      }
+    ]
+  });
+});
+
+// Start server
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
